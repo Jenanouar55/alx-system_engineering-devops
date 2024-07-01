@@ -1,3 +1,6 @@
+# using puppet to make changes to the default ssh config file
+# so that one can connect to a server without typing a password.
+
 include stdlib
 
 file_line { 'Set SSH Private Key':
