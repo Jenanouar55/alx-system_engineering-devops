@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
-# Script that installs Nginx server and redirects /redirect_me
-apt-get -y update
-apt-get -y install nginx
-echo "Hello World!" > /var/www/html/index.nginx-sirtuns4real.html
-sed -i "s/server_name _;/server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/luischaparroc permanent;/" /etc/nginx/sites-available/default
-service nginx start
+# Script that installs Nginx server and redirects /redirect_me to https://github.com/luischaparroc
+
+# Update package lists
+sudo apt-get -y update
+
+# Install Nginx
+sudo apt-get -y install nginx
+
+# Create a test HTML file
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+
+# Update Nginx configuration to add redirection
+sudo sed -i '/server_name _;/a \    rewrite ^/redirect_me https://github.com/luischaparroc permanent;' /etc/nginx/sites-available/default
+
+# Test Nginx configuration for errors
+sudo nginx -t
+
+# Start Nginx manually with specified port
+sudo /usr/sbin/nginx -g 'daemon off;'
