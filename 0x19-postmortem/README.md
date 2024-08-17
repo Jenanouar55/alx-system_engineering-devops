@@ -1,3 +1,5 @@
+![Issue Timeline](Timeline.jpg)
+
 # Postmortem: The Case of the Nginx Misadventure 🕵️‍♂️
 ## Issue Summary
 ### Duration:
@@ -46,3 +48,6 @@ This visual will help readers quickly grasp the issue while adding a bit of flai
 
 With a touch of humor and a clear action plan, this postmortem not only addresses the issue but also engages the team in a way that makes them want to read—and act on—it.
 
+
+
+![This Postmortem](Designer.jpeg)
