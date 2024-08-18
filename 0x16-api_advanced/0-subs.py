@@ -10,7 +10,7 @@ import requests
 def number_of_subscribers(subreddit):
     """queries the Reddit API"""
     headers = {
-        "ser-Agent": "0x16-api_advanced:project:\
+        "User-Agent": "0x16-api_advanced:project:\
 v1.0.0 (by /u/Unfair-Listen1740)"
         }
     url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
