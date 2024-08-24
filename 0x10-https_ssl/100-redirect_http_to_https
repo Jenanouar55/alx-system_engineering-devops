@@ -8,6 +8,7 @@ defaults
 frontend zhanzar.tech-frontend
     bind *:80
     bind *:443 ssl crt /etc/haproxy/certs/zhanzar.tech
+    http-request redirect scheme https  if !{ ssl_fc }
     default_backend zhanzar.tech-backend
 
 backend zhanzar.tech-backend
