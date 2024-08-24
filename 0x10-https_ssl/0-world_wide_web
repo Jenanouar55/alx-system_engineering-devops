@@ -1,16 +1,41 @@
 #!/usr/bin/env bash
 # Takes a subdomain and a domain and returns information about the subdomain
 
-print_info () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
+
+display_info() {
+    local domain=$1
+    local subdomain=$2
+    local full_domain="${subdomain}.${domain}"
+
+    # Perform DNS query and extract relevant information
+    dig_output=$(dig +short "$full_domain" A)
+    if [ -n "$dig_output" ]; then
+        echo "The subdomain $subdomain is an A record and points to $dig_output"
+    else
+        echo "The subdomain $subdomain does not exist or has no A record."
+    fi
 }
 
-if [ "$#" -eq 2 ]
-then
-    print_info "$2.$1" "$2"
-else
-    print_info "www.$1" "www"
-    print_info "lb-01.$1" "lb-01"
-    print_info "web-01.$1" "web-01"
-    print_info "web-02.$1" "web-02"
+# Main script logic
+main() {
+    local domain=$1
+    local subdomain=$2
+
+    # If no subdomain is provided, check the default subdomains
+    if [ -z "$subdomain" ]; then
+        for sd in www lb-01 web-01 web-02; do
+            display_info "$domain" "$sd"
+        done
+    else
+        display_info "$domain" "$subdomain"
+    fi
+}
+
+# Check if at least the domain parameter is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
 fi
+
+# Run the main function with provided arguments
+main "$1" "$2"
